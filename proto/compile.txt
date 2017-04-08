@@ -1,0 +1,1 @@
+protoc --plugin=protoc-gen-grpc-java=build/exe/java_plugin/protoc-gen-grpc-java   --grpc-java_out="out" --proto_path="/home/robin/grpc/grpc-java/grpc/proto/" "/home/robin/grpc/grpc-java/grpc/proto/handler.proto"

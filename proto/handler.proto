@@ -1,0 +1,75 @@
+option java_package="grpc";
+option java_multiple_files = true;
+
+//the methods needed for institute
+service InstituteService{
+    rpc getInstitutebyId(InstituteId) returns (Institute) {}
+    rpc getAllInstitutes(Empty) returns (InstituteList) {}
+    rpc addInstitute(Institute) returns (Empty) {}
+}
+//methods needed for users
+service UserService{
+    rpc register(User) returns (User){}
+    rpc getNameById(UserId) returns (UserName){}
+    rpc getIdByName(UserName) returns (UserId) {}
+    rpc getInstituteIdByName(UserName) returns (InstituteId){}
+}
+//for comments
+service CommentService{
+    rpc getCommentsBySubject(Subject) returns (CommentList){}
+    rpc addComment(Comment) returns (Empty){}
+}
+//for subjects
+service SubjectService{
+    rpc getSubjectsByInstitute(Institute) returns (SubjectList){}
+    rpc getSubjectByName(SubjectName) returns (Subject){}
+    rpc addSubject(Subject) returns(Empty){}
+}
+message Institute{
+    required string instituteName = 1;
+    required uint64 id = 2;
+}
+message InstituteId{
+    required uint64 id =1;
+}
+message InstituteList{
+    repeated Institute institutes = 1;
+}
+message Empty{
+
+}
+message User{
+    required uint64 id = 1;
+    required string userName = 2;
+    optional string realName = 3;
+    optional uint64 instituteId = 4;
+    required string password = 5;
+}
+message UserName{
+    required string name = 1;
+}
+message UserId{
+    required uint64 id =1;
+}
+message Subject{
+    required uint64 id = 1;
+    required string name = 2;
+    required uint64 instituteId = 3;
+    optional int32 semester = 4;
+}
+message SubjectList{
+    repeated Subject subjects = 1;
+}
+message SubjectName{
+    required string name = 1;
+}
+message Comment{
+    required uint64 id =1;
+    required string commentText = 2;
+    required uint64 userId = 3;
+    required uint64 subjectId = 4;
+    optional string userName = 5;
+}
+message CommentList{
+    repeated Comment comments = 1;
+}
