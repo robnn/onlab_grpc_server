@@ -84,7 +84,7 @@ public class OnlabDal implements DataAccesLayer {
         Institute institute = Institute.getDefaultInstance();
         try {
             String query = "SELECT institute_id, name FROM INSTITUTE "
-                    + "WHERE id = ?";
+                    + "WHERE institute_id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setLong(1, id.getId());
             ResultSet rset = preparedStatement.executeQuery();
@@ -118,19 +118,21 @@ public class OnlabDal implements DataAccesLayer {
     public User registerQuery(User u) {
         User toreturn = User.getDefaultInstance();
         try {
-            String query = "INSERT into USER_TABLE (user_name, real_name, institute_id, password, role) VALUES"
-                    + "(?,?,?,?, 'ROLE_USER')";
+            String idQuery = "SELECT MAX(USER_ID) AS MAXID FROM USER_TABLE";
+            PreparedStatement idstatement = connection.prepareStatement(idQuery);
+            ResultSet resultSet = idstatement.executeQuery();
+            resultSet.next();
+            long id = resultSet.getLong("MAXID") +1;
+            String query = "INSERT into USER_TABLE (user_id, user_name, real_name, institute_id, password, role) VALUES"
+                    + "(?,?,?,?,?, 'ROLE_USER')";
             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString(1, u.getUserName());
-            preparedStatement.setString(2, u.getRealName());
-            preparedStatement.setLong(3, u.getInstituteId());
-            preparedStatement.setString(4, u.getPassword());
+            preparedStatement.setLong(1,id);
+            preparedStatement.setString(2, u.getUserName());
+            preparedStatement.setString(3, u.getRealName());
+            preparedStatement.setLong(4, u.getInstituteId());
+            preparedStatement.setString(5, u.getPassword());
             preparedStatement.executeUpdate();
-            try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    toreturn = u.toBuilder().setId(generatedKeys.getLong(1)).build();
-                }
-            }
+            toreturn = u.toBuilder().setId(id).build();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -225,12 +227,18 @@ public class OnlabDal implements DataAccesLayer {
     @Override
     public void addCommentQuery(Comment c) {
         try {
-            String query = "INSERT INTO COMMENT (user_id, subject_id, comment_text) VALUES" +
-                    "(?,?,?)";
+            String idQuery = "SELECT MAX(COMMENT_ID) AS MAXID FROM SUBJECT_COMMENT";
+            PreparedStatement idstatement = connection.prepareStatement(idQuery);
+            ResultSet resultSet = idstatement.executeQuery();
+            resultSet.next();
+            long id = resultSet.getLong("MAXID") +1;
+            String query = "INSERT INTO SUBJECT_COMMENT (comment_id, user_id, subject_id, comment_text) VALUES" +
+                    "(?,?,?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setLong(1, c.getUserId());
-            preparedStatement.setLong(2, c.getSubjectId());
-            preparedStatement.setString(3, c.getCommentText());
+            preparedStatement.setLong(1,id);
+            preparedStatement.setLong(2, c.getUserId());
+            preparedStatement.setLong(3, c.getSubjectId());
+            preparedStatement.setString(4, c.getCommentText());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -289,12 +297,18 @@ public class OnlabDal implements DataAccesLayer {
     @Override
     public void addSubjectQuery(Subject subject) {
         try {
-            String query = "INSERT INTO SUBJECT (name, semester, institute_id)" +
-                    "VALUES(?,?,?)";
+            String idQuery = "SELECT MAX(SUBJECT_ID) AS MAXID FROM SUBJECT";
+            PreparedStatement idstatement = connection.prepareStatement(idQuery);
+            ResultSet resultSet = idstatement.executeQuery();
+            resultSet.next();
+            long id = resultSet.getLong("MAXID") +1;
+            String query = "INSERT INTO SUBJECT (subject_id, name, semester, institute_id)" +
+                    "VALUES(?,?,?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, subject.getName());
-            preparedStatement.setInt(2, subject.getSemester());
-            preparedStatement.setLong(3, subject.getInstituteId());
+            preparedStatement.setLong(1,id);
+            preparedStatement.setString(2, subject.getName());
+            preparedStatement.setInt(3, subject.getSemester());
+            preparedStatement.setLong(4, subject.getInstituteId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

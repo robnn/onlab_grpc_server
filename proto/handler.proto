@@ -1,4 +1,4 @@
-option java_package="grpc";
+option java_package="kurovszky.robin.unicalendar.web_service.grpc.generated";
 option java_multiple_files = true;
 
 //the methods needed for institute
@@ -25,6 +25,7 @@ service SubjectService{
     rpc getSubjectByName(SubjectName) returns (Subject){}
     rpc addSubject(Subject) returns(Empty){}
 }
+
 message Institute{
     required string instituteName = 1;
     required uint64 id = 2;
