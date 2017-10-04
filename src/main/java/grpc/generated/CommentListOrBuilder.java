@@ -29,5 +29,5 @@ public interface CommentListOrBuilder extends
    * <code>repeated .Comment comments = 1;</code>
    */
   CommentOrBuilder getCommentsOrBuilder(
-      int index);
+          int index);
 }

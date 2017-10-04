@@ -1,8 +1,9 @@
 package grpc.impl;
 
 import grpc.generated.*;
-import grpc.impl.dal.DataAccesLayer;
-import grpc.impl.dal.OnlabDal;
+import grpc.generated.Boolean;
+import grpc.dal.DataAccesLayer;
+import grpc.dal.OnlabDal;
 import grpc.impl.exception.CouldNotConnectException;
 import io.grpc.stub.StreamObserver;
 
@@ -17,6 +18,14 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
 
     public UserServiceImpl() throws CouldNotConnectException, ClassNotFoundException {
         dl.connect(username,password);
+    }
+
+    @Override
+    public void validate(User request, StreamObserver<Boolean> responseObserver) {
+        Boolean isValid = Boolean.newBuilder().setValid(dl.validateUser(request)).build();
+        responseObserver.onNext(isValid);
+        responseObserver.onCompleted();
+;
     }
 
     @Override

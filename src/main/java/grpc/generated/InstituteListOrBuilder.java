@@ -29,5 +29,5 @@ public interface InstituteListOrBuilder extends
    * <code>repeated .Institute institutes = 1;</code>
    */
   InstituteOrBuilder getInstitutesOrBuilder(
-      int index);
+          int index);
 }

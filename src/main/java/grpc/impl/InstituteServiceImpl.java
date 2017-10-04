@@ -5,8 +5,8 @@ import grpc.generated.Institute;
 import grpc.generated.InstituteId;
 import grpc.generated.InstituteList;
 import grpc.generated.InstituteServiceGrpc;
-import grpc.impl.dal.DataAccesLayer;
-import grpc.impl.dal.OnlabDal;
+import grpc.dal.DataAccesLayer;
+import grpc.dal.OnlabDal;
 import grpc.impl.exception.CouldNotConnectException;
 import io.grpc.stub.StreamObserver;
 

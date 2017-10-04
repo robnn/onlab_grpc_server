@@ -1,8 +1,8 @@
 package grpc.impl;
 
 import grpc.generated.*;
-import grpc.impl.dal.DataAccesLayer;
-import grpc.impl.dal.OnlabDal;
+import grpc.dal.DataAccesLayer;
+import grpc.dal.OnlabDal;
 import grpc.impl.exception.CouldNotConnectException;
 import io.grpc.stub.StreamObserver;
 

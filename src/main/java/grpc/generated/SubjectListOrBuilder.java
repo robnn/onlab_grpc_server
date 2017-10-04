@@ -29,5 +29,5 @@ public interface SubjectListOrBuilder extends
    * <code>repeated .Subject subjects = 1;</code>
    */
   SubjectOrBuilder getSubjectsOrBuilder(
-      int index);
+          int index);
 }

@@ -1,0 +1,81 @@
+syntax = "proto3";
+
+option java_package="kurovszky.robin.unicalendar.web_service.grpc.generated";
+option java_multiple_files = true;
+
+//the methods needed for institute
+service InstituteService{
+    rpc getInstitutebyId(InstituteId) returns (Institute) {}
+    rpc getAllInstitutes(Empty) returns (InstituteList) {}
+    rpc addInstitute(Institute) returns (Empty) {}
+}
+//methods needed for users
+service UserService{
+    rpc validate(User) returns (Boolean){}
+    rpc register(User) returns (User){}
+    rpc getNameById(UserId) returns (UserName){}
+    rpc getIdByName(UserName) returns (UserId) {}
+    rpc getInstituteIdByName(UserName) returns (InstituteId){}
+}
+//for comments
+service CommentService{
+    rpc getCommentsBySubject(Subject) returns (CommentList){}
+    rpc addComment(Comment) returns (Empty){}
+}
+//for subjects
+service SubjectService{
+    rpc getSubjectsByInstitute(Institute) returns (SubjectList){}
+    rpc getSubjectByName(SubjectName) returns (Subject){}
+    rpc addSubject(Subject) returns(Empty){}
+}
+message Boolean{
+    bool valid = 1;
+}
+message Institute{
+    string instituteName = 1;
+    uint64 id = 2;
+}
+message InstituteId{
+    uint64 id =1;
+}
+message InstituteList{
+    repeated Institute institutes = 1;
+}
+message Empty{
+
+}
+message User{
+    uint64 id = 1;
+    string userName = 2;
+    string realName = 3;
+    uint64 instituteId = 4;
+    string password = 5;
+}
+message UserName{
+    string name = 1;
+}
+message UserId{
+    uint64 id =1;
+}
+message Subject{
+    uint64 id = 1;
+    string name = 2;
+    uint64 instituteId = 3;
+    int32 semester = 4;
+}
+message SubjectList{
+    repeated Subject subjects = 1;
+}
+message SubjectName{
+    string name = 1;
+}
+message Comment{
+    uint64 id =1;
+    string commentText = 2;
+    uint64 userId = 3;
+    uint64 subjectId = 4;
+    string userName = 5;
+}
+message CommentList{
+    repeated Comment comments = 1;
+}

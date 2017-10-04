@@ -1,3 +1,5 @@
+syntax = "proto3";
+
 option java_package="kurovszky.robin.unicalendar.web_service.grpc.generated";
 option java_multiple_files = true;
 
@@ -27,11 +29,11 @@ service SubjectService{
 }
 
 message Institute{
-    required string instituteName = 1;
-    required uint64 id = 2;
+    string instituteName = 1;
+    uint64 id = 2;
 }
 message InstituteId{
-    required uint64 id =1;
+    uint64 id =1;
 }
 message InstituteList{
     repeated Institute institutes = 1;
@@ -40,36 +42,36 @@ message Empty{
 
 }
 message User{
-    required uint64 id = 1;
-    required string userName = 2;
-    optional string realName = 3;
-    optional uint64 instituteId = 4;
-    required string password = 5;
+    uint64 id = 1;
+    string userName = 2;
+    string realName = 3;
+    uint64 instituteId = 4;
+    string password = 5;
 }
 message UserName{
-    required string name = 1;
+    string name = 1;
 }
 message UserId{
-    required uint64 id =1;
+    uint64 id =1;
 }
 message Subject{
-    required uint64 id = 1;
-    required string name = 2;
-    required uint64 instituteId = 3;
-    optional int32 semester = 4;
+    uint64 id = 1;
+    string name = 2;
+    uint64 instituteId = 3;
+    int32 semester = 4;
 }
 message SubjectList{
     repeated Subject subjects = 1;
 }
 message SubjectName{
-    required string name = 1;
+    string name = 1;
 }
 message Comment{
-    required uint64 id =1;
-    required string commentText = 2;
-    required uint64 userId = 3;
-    required uint64 subjectId = 4;
-    optional string userName = 5;
+    uint64 id =1;
+    string commentText = 2;
+    uint64 userId = 3;
+    uint64 subjectId = 4;
+    string userName = 5;
 }
 message CommentList{
     repeated Comment comments = 1;
