@@ -1,4 +1,4 @@
-package grpc.impl.exception;
+package grpc.dal.exception;
 
 /**
  * Created by robin on 4/6/17.

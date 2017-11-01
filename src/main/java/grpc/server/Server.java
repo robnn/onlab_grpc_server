@@ -1,11 +1,10 @@
 package grpc.server;
 
-import grpc.impl.CommentServiceImpl;
-import grpc.impl.SubjectServiceImpl;
-import grpc.impl.UserServiceImpl;
-import grpc.impl.exception.CouldNotConnectException;
-import grpc.impl.InstituteServiceImpl;
-import io.grpc.Server;
+import grpc.service.CommentServiceImpl;
+import grpc.service.SubjectServiceImpl;
+import grpc.service.UserServiceImpl;
+import grpc.dal.exception.*;
+import grpc.service.InstituteServiceImpl;
 import io.grpc.ServerBuilder;
 
 import java.io.IOException;
@@ -14,12 +13,12 @@ import java.util.logging.Logger;
 /**
  * Created by robin on 4/6/17.
  */
-public class OnlabServer {
+public class Server {
     private int port;
-    private Server server;
+    private io.grpc.Server server;
     private Logger logger;
 
-    public OnlabServer(int port) throws IOException, CouldNotConnectException, ClassNotFoundException {
+    public Server(int port) throws IOException, CouldNotConnectException, ClassNotFoundException {
         this(ServerBuilder.forPort(port), port);
         logger = Logger.getAnonymousLogger();
     }
@@ -27,7 +26,7 @@ public class OnlabServer {
     /**
      * Create a RouteGuide server using serverBuilder as a base and features as data.
      */
-    public OnlabServer(ServerBuilder<?> serverBuilder, int port) throws CouldNotConnectException, ClassNotFoundException {
+    public Server(ServerBuilder<?> serverBuilder, int port) throws CouldNotConnectException, ClassNotFoundException {
         this.port = port;
         server = serverBuilder.addService(new InstituteServiceImpl())
                 .addService(new SubjectServiceImpl())
@@ -44,7 +43,7 @@ public class OnlabServer {
             public void run() {
                 // Use stderr here since the logger may has been reset by its JVM shutdown hook.
                 System.err.println("*** shutting down gRPC server since JVM is shutting down");
-                OnlabServer.this.stop();
+                Server.this.stop();
                 System.err.println("*** server shut down");
             }
         });
@@ -60,7 +59,7 @@ public class OnlabServer {
     }
 
     /**
-     * Await termination on the main thread since the grpc library uses daemon threads.
+     * Await termination on the Publisher thread since the grpc library uses daemon threads.
      */
     public void blockUntilShutdown() throws InterruptedException {
         if (server != null) {

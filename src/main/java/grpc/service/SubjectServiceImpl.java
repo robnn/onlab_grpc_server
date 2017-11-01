@@ -1,16 +1,16 @@
-package grpc.impl;
+package grpc.service;
 
 import grpc.generated.*;
-import grpc.dal.DataAccesLayer;
-import grpc.dal.OnlabDal;
-import grpc.impl.exception.CouldNotConnectException;
+import grpc.dal.DataAccessLayer;
+import grpc.dal.DataAccessLayerImpl;
+import grpc.dal.exception.*;
 import io.grpc.stub.StreamObserver;
 
 /**
  * Created by robin on 4/8/17.
  */
 public class SubjectServiceImpl extends SubjectServiceGrpc.SubjectServiceImplBase {
-    private DataAccesLayer dl = OnlabDal.getInstance();
+    private DataAccessLayer dl = DataAccessLayerImpl.getInstance();
 
     private static final String username = "system";
     private static final String password = "oracle";

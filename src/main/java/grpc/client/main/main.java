@@ -1,7 +1,7 @@
 package grpc.client.main;
 
 import grpc.client.OnlabClient;
-import grpc.impl.exception.CouldNotConnectException;
+import grpc.dal.exception.*;
 
 import java.io.IOException;
 

@@ -62,7 +62,7 @@
                 <failOnMissingWebXml>false</failOnMissingWebXml>
                 <archive>
                     <manifest>
-                        <mainClass>grpc.server.main.main</mainClass>
+                        <mainClass>grpc.server.main.Publisher</mainClass>
                         <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                     </manifest>
                 </archive>

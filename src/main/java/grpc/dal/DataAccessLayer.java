@@ -1,12 +1,12 @@
 package grpc.dal;
 
 import grpc.generated.*;
-import grpc.impl.exception.CouldNotConnectException;
+import grpc.dal.exception.*;
 
 /**
  * Created by robin on 4/6/17.
  */
-public interface DataAccesLayer {
+public interface DataAccessLayer {
     //institute
     void connect(String username, String password) throws CouldNotConnectException, ClassNotFoundException;
     InstituteList allInstituteQuery();

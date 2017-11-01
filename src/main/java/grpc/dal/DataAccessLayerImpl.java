@@ -1,9 +1,7 @@
 package grpc.dal;
 
 import grpc.generated.*;
-import grpc.impl.exception.CouldNotConnectException;
-import grpc.impl.exception.NotConnectedException;
-
+import grpc.dal.exception.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +9,9 @@ import java.util.List;
 /**
  * Created by robin on 4/6/17.
  */
-public class OnlabDal implements DataAccesLayer {
+public class DataAccessLayerImpl implements DataAccessLayer {
 
-    private static OnlabDal instance = null;
+    private static DataAccessLayerImpl instance = null;
     private Connection connection;
     private static final String driverName = "oracle.jdbc.driver.OracleDriver";
     private static final String databaseUrl = "jdbc:oracle:thin:@192.168.0.104:1521:xe";
@@ -24,9 +22,9 @@ public class OnlabDal implements DataAccesLayer {
         }
     }
 
-    public static OnlabDal getInstance() {
+    public static DataAccessLayerImpl getInstance() {
         if(instance==null){
-            instance = new OnlabDal();
+            instance = new DataAccessLayerImpl();
         }
         return  instance;
     }
@@ -52,7 +50,7 @@ public class OnlabDal implements DataAccesLayer {
     @Override
     public boolean validateUser(User u) {
         try {
-            String query = "SELECT count(*) as 'Count' FROM USER_TABLE " +
+            String query = "SELECT count(*) as Count FROM USER_TABLE " +
         "WHERE user_name = ? and password = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1,u.getUserName());

@@ -1,17 +1,17 @@
-package grpc.impl;
+package grpc.service;
 
 import grpc.generated.*;
 import grpc.generated.Boolean;
-import grpc.dal.DataAccesLayer;
-import grpc.dal.OnlabDal;
-import grpc.impl.exception.CouldNotConnectException;
+import grpc.dal.DataAccessLayer;
+import grpc.dal.DataAccessLayerImpl;
+import grpc.dal.exception.*;
 import io.grpc.stub.StreamObserver;
 
 /**
  * Created by robin on 4/8/17.
  */
 public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
-    private DataAccesLayer dl = OnlabDal.getInstance();
+    private DataAccessLayer dl = DataAccessLayerImpl.getInstance();
 
     private static final String username = "system";
     private static final String password = "oracle";
@@ -22,8 +22,9 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
 
     @Override
     public void validate(User request, StreamObserver<Boolean> responseObserver) {
-        Boolean isValid = Boolean.newBuilder().setValid(dl.validateUser(request)).build();
-        responseObserver.onNext(isValid);
+        Boolean.Builder isValid = Boolean.newBuilder();
+        isValid.setValid(dl.validateUser(request));
+        responseObserver.onNext(isValid.build());
         responseObserver.onCompleted();
 ;
     }

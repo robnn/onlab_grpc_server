@@ -1,20 +1,20 @@
-package grpc.impl;
+package grpc.service;
 
 import grpc.generated.Empty;
 import grpc.generated.Institute;
 import grpc.generated.InstituteId;
 import grpc.generated.InstituteList;
 import grpc.generated.InstituteServiceGrpc;
-import grpc.dal.DataAccesLayer;
-import grpc.dal.OnlabDal;
-import grpc.impl.exception.CouldNotConnectException;
+import grpc.dal.DataAccessLayer;
+import grpc.dal.DataAccessLayerImpl;
+import grpc.dal.exception.*;
 import io.grpc.stub.StreamObserver;
 
 /**
  * Created by robin on 4/6/17.
  */
 public class InstituteServiceImpl extends InstituteServiceGrpc.InstituteServiceImplBase {
-    private DataAccesLayer dl = OnlabDal.getInstance();
+    private DataAccessLayer dl = DataAccessLayerImpl.getInstance();
 
     private static final String username = "system";
     private static final String password = "oracle";
